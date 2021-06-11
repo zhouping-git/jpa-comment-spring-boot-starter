@@ -5,7 +5,6 @@ import com.zp.expand.jpa.comment.service.AlterCommentService;
 import com.zp.expand.jpa.comment.service.JpaCommentService;
 import com.zp.expand.jpa.comment.service.impl.*;
 import com.zp.expand.jpa.comment.enums.DbTypeEnum;
-import com.zp.expand.jpacomment.service.impl.*;
 import com.zp.expand.jpa.comment.properties.JpaCommentProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
