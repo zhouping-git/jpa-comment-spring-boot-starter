@@ -1,4 +1,4 @@
-package com.zp.expand.jpacomment.annotation;
+package com.zp.expand.jpa.comment.annotation;
 
 import java.lang.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.zp.expand.jpacomment.properties;
+package com.zp.expand.jpa.comment.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

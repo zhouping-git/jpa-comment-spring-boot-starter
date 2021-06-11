@@ -1,25 +1,22 @@
-package com.zp.expand.jpacomment.pojo.dto;
+package com.zp.expand.jpa.comment.pojo.dto;
 
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
- * @Description: 表信息实体
+ * @Description: 表字段信息实体
  * @Author: zhoup
  * @Date: 2021/6/8
- **/
-public class TableCommentDTO implements Serializable {
+**/
+public class ColumnCommentDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String name;//表名
+    private String name;//字段名
 
-    private String comment;//表注释
+    private String comment;//字段注释
 
-    private boolean appoint = false;//标注表是否添加@TableComment注解
-
-    private List<ColumnCommentDTO> columnCommentDTOList;
+    private boolean appoint = false;//标注表是否添加@ColumnComment注解
 
     public String getName() {
         return name;
@@ -37,14 +34,6 @@ public class TableCommentDTO implements Serializable {
         this.comment = comment;
     }
 
-    public List<ColumnCommentDTO> getColumnCommentDTOList() {
-        return columnCommentDTOList;
-    }
-
-    public void setColumnCommentDTOList(List<ColumnCommentDTO> columnCommentDTOList) {
-        this.columnCommentDTOList = columnCommentDTOList;
-    }
-
     public boolean isAppoint() {
         return appoint;
     }
@@ -55,11 +44,10 @@ public class TableCommentDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "TableCommentDTO{" +
+        return "ColumnCommentDTO{" +
                 "name='" + name + '\'' +
                 ", comment='" + comment + '\'' +
                 ", appoint='" + appoint + '\'' +
-                ", columnCommentDTOList=" + columnCommentDTOList +
                 '}';
     }
 }

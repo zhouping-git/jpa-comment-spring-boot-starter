@@ -1,6 +1,6 @@
-package com.zp.expand.jpacomment.service;
+package com.zp.expand.jpa.comment.service;
 
-import com.zp.expand.jpacomment.pojo.dto.TableAndColumnCommentDto;
+import com.zp.expand.jpa.comment.pojo.dto.TableAndColumnCommentDto;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
@@ -46,7 +46,7 @@ public interface AlterCommentService {
      * 获取原始表和字段的注释信息
      * @Author: zhoup
      * @Date: 2021/6/8
-     * @Return: java.util.List<com.zp.expand.jpacomment.pojo.dto.TableAndColumnCommentDto>
+     * @Return: java.util.List<TableAndColumnCommentDto>
     **/
     List<TableAndColumnCommentDto> getOldComment();
 

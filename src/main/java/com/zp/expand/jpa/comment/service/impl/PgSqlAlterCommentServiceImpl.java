@@ -1,7 +1,7 @@
-package com.zp.expand.jpacomment.service.impl;
+package com.zp.expand.jpa.comment.service.impl;
 
-import com.zp.expand.jpacomment.pojo.dto.TableAndColumnCommentDto;
-import com.zp.expand.jpacomment.service.AlterCommentService;
+import com.zp.expand.jpa.comment.service.AlterCommentService;
+import com.zp.expand.jpa.comment.pojo.dto.TableAndColumnCommentDto;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 

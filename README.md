@@ -100,7 +100,7 @@ public class SetCcommentController {
 logging:
   level:
     root: INFO
-    com.zp.middol: DEBUG  # jpacomment-spring-boot-starter日志打印
+    com.zp.middol: DEBUG  # jpa-comment-spring-boot-starter日志打印
 ```
 控制台可以打印如下信息：
 

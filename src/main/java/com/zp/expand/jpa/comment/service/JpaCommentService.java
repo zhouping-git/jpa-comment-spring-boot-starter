@@ -1,13 +1,13 @@
-package com.zp.expand.jpacomment.service;
+package com.zp.expand.jpa.comment.service;
 
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
-import com.zp.expand.jpacomment.pojo.dto.TableAndColumnCommentDto;
-import com.zp.expand.jpacomment.pojo.dto.TableCommentDTO;
-import com.zp.expand.jpacomment.annotation.ColumnComment;
-import com.zp.expand.jpacomment.annotation.TableComment;
-import com.zp.expand.jpacomment.pojo.dto.ColumnCommentDTO;
+import com.zp.expand.jpa.comment.pojo.dto.TableAndColumnCommentDto;
+import com.zp.expand.jpa.comment.pojo.dto.TableCommentDTO;
+import com.zp.expand.jpa.comment.annotation.ColumnComment;
+import com.zp.expand.jpa.comment.annotation.TableComment;
+import com.zp.expand.jpa.comment.pojo.dto.ColumnCommentDTO;
 import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.persister.entity.EntityPersister;
 import org.hibernate.persister.entity.SingleTableEntityPersister;

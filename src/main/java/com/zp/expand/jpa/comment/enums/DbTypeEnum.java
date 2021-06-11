@@ -1,7 +1,7 @@
-package com.zp.expand.jpacomment.enums;
+package com.zp.expand.jpa.comment.enums;
 
 
-import com.zp.expand.jpacomment.behavior.IEnum;
+import com.zp.expand.jpa.comment.behavior.IEnum;
 
 /**
  * 数据库枚举类

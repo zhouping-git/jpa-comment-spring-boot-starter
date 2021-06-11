@@ -1,11 +1,12 @@
-package com.zp.expand.jpacomment.config;
+package com.zp.expand.jpa.comment.config;
 
 import cn.hutool.core.util.StrUtil;
-import com.zp.expand.jpacomment.enums.DbTypeEnum;
-import com.zp.expand.jpacomment.service.JpaCommentService;
+import com.zp.expand.jpa.comment.service.AlterCommentService;
+import com.zp.expand.jpa.comment.service.JpaCommentService;
+import com.zp.expand.jpa.comment.service.impl.*;
+import com.zp.expand.jpa.comment.enums.DbTypeEnum;
 import com.zp.expand.jpacomment.service.impl.*;
-import com.zp.expand.jpacomment.properties.JpaCommentProperties;
-import com.zp.expand.jpacomment.service.AlterCommentService;
+import com.zp.expand.jpa.comment.properties.JpaCommentProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

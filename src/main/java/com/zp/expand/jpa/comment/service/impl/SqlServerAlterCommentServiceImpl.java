@@ -1,7 +1,7 @@
-package com.zp.expand.jpacomment.service.impl;
+package com.zp.expand.jpa.comment.service.impl;
 
-import com.zp.expand.jpacomment.pojo.dto.TableAndColumnCommentDto;
-import com.zp.expand.jpacomment.service.AlterCommentService;
+import com.zp.expand.jpa.comment.pojo.dto.TableAndColumnCommentDto;
+import com.zp.expand.jpa.comment.service.AlterCommentService;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.ArrayList;
@@ -85,7 +85,7 @@ public class SqlServerAlterCommentServiceImpl implements AlterCommentService {
      * @Author: zhoup
      * @Date: 2021/6/8
      * @param
-     * @Return: java.util.List<com.zp.expand.jpacomment.pojo.dto.TableAndColumnCommentDto>
+     * @Return: java.util.List<TableAndColumnCommentDto>
      **/
     @Override
     public List<TableAndColumnCommentDto> getOldComment(){

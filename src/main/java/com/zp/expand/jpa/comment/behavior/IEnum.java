@@ -1,4 +1,4 @@
-package com.zp.expand.jpacomment.behavior;
+package com.zp.expand.jpa.comment.behavior;
 
 public interface IEnum {
 

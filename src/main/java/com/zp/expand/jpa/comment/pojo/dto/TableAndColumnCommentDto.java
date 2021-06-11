@@ -1,4 +1,4 @@
-package com.zp.expand.jpacomment.pojo.dto;
+package com.zp.expand.jpa.comment.pojo.dto;
 
 /**
  * @Description: TODO
