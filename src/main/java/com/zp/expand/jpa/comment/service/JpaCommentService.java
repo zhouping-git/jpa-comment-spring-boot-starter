@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.util.*;
@@ -36,7 +37,7 @@ public class JpaCommentService {
 
     Map<String, TableCommentDTO> dtoMap;
 
-    boolean merge,automatic;
+    boolean merge,automatic,ignoreTheCase;
 
     Map<String, TableCommentDTO> oldMap;
 
@@ -49,31 +50,60 @@ public class JpaCommentService {
             if(list.size() > 0){
                 oldMap = new HashMap();
                 for(TableAndColumnCommentDto dto : list){
-                    if(oldMap.containsKey(dto.getTableName()) && StrUtil.isNotBlank(dto.getColumnName())){
-                        TableCommentDTO tableDto = oldMap.get(dto.getTableName());
-                        List<ColumnCommentDTO> columnList = tableDto.getColumnCommentDTOList();
-                        ColumnCommentDTO columnDto = new ColumnCommentDTO();
-                        columnDto.setName(dto.getColumnName());
-                        columnDto.setComment(dto.getColumnComment());
-                        columnList.add(columnDto);
-
-                        tableDto.setColumnCommentDTOList(columnList);
-                        oldMap.put(dto.getTableName(), tableDto);
-                    }else{
-                        TableCommentDTO tableDto = new TableCommentDTO();
-                        tableDto.setName(dto.getTableName());
-                        tableDto.setComment(dto.getTableComment());
-
-                        if(StrUtil.isNotBlank(dto.getColumnName())) {
-                            List<ColumnCommentDTO> columnList = new ArrayList<>();
+                    if (ignoreTheCase){
+                        if (oldMap.containsKey(dto.getTableName().toLowerCase()) && StrUtil.isNotBlank(dto.getColumnName())) {
+                            TableCommentDTO tableDto = oldMap.get(dto.getTableName().toLowerCase());
+                            List<ColumnCommentDTO> columnList = tableDto.getColumnCommentDTOList();
                             ColumnCommentDTO columnDto = new ColumnCommentDTO();
                             columnDto.setName(dto.getColumnName());
                             columnDto.setComment(dto.getColumnComment());
                             columnList.add(columnDto);
 
                             tableDto.setColumnCommentDTOList(columnList);
+                            oldMap.put(dto.getTableName().toLowerCase(), tableDto);
+                        } else {
+                            TableCommentDTO tableDto = new TableCommentDTO();
+                            tableDto.setName(dto.getTableName());
+                            tableDto.setComment(dto.getTableComment());
+
+                            if (StrUtil.isNotBlank(dto.getColumnName())) {
+                                List<ColumnCommentDTO> columnList = new ArrayList<>();
+                                ColumnCommentDTO columnDto = new ColumnCommentDTO();
+                                columnDto.setName(dto.getColumnName());
+                                columnDto.setComment(dto.getColumnComment());
+                                columnList.add(columnDto);
+
+                                tableDto.setColumnCommentDTOList(columnList);
+                            }
+                            oldMap.put(dto.getTableName().toLowerCase(), tableDto);
                         }
-                        oldMap.put(dto.getTableName(), tableDto);
+                    }else {
+                        if (oldMap.containsKey(dto.getTableName()) && StrUtil.isNotBlank(dto.getColumnName())) {
+                            TableCommentDTO tableDto = oldMap.get(dto.getTableName());
+                            List<ColumnCommentDTO> columnList = tableDto.getColumnCommentDTOList();
+                            ColumnCommentDTO columnDto = new ColumnCommentDTO();
+                            columnDto.setName(dto.getColumnName());
+                            columnDto.setComment(dto.getColumnComment());
+                            columnList.add(columnDto);
+
+                            tableDto.setColumnCommentDTOList(columnList);
+                            oldMap.put(dto.getTableName(), tableDto);
+                        } else {
+                            TableCommentDTO tableDto = new TableCommentDTO();
+                            tableDto.setName(dto.getTableName());
+                            tableDto.setComment(dto.getTableComment());
+
+                            if (StrUtil.isNotBlank(dto.getColumnName())) {
+                                List<ColumnCommentDTO> columnList = new ArrayList<>();
+                                ColumnCommentDTO columnDto = new ColumnCommentDTO();
+                                columnDto.setName(dto.getColumnName());
+                                columnDto.setComment(dto.getColumnComment());
+                                columnList.add(columnDto);
+
+                                tableDto.setColumnCommentDTOList(columnList);
+                            }
+                            oldMap.put(dto.getTableName(), tableDto);
+                        }
                     }
                 }
             }
@@ -137,7 +167,13 @@ public class JpaCommentService {
     public void alterSingleTableAndColumn(String tableName) {
         TableCommentDTO commentDTO = dtoMap.get(tableName);
         if(merge){
-            TableCommentDTO oldDto = oldMap.get(tableName);
+            TableCommentDTO oldDto;
+            if (ignoreTheCase){
+                oldDto = oldMap.get(tableName.toLowerCase());
+            }else {
+                oldDto = oldMap.get(tableName);
+            }
+
             if(commentDTO == null && oldDto != null){
                 if(StrUtil.isNotBlank(oldDto.getComment())) {
                     if (logger.isDebugEnabled()) {
@@ -163,7 +199,12 @@ public class JpaCommentService {
                     }
                     commentDTO.getColumnCommentDTOList().forEach(
                             item -> {
-                                List<ColumnCommentDTO> tempList =oldDto.getColumnCommentDTOList().stream().filter(e -> e.getName().equals(item.getName())).collect(Collectors.toList());
+                                List<ColumnCommentDTO> tempList;
+                                if (ignoreTheCase){
+                                    tempList =oldDto.getColumnCommentDTOList().stream().filter(e -> e.getName().toLowerCase().equals(item.getName().toLowerCase())).collect(Collectors.toList());
+                                }else {
+                                    tempList =oldDto.getColumnCommentDTOList().stream().filter(e -> e.getName().equals(item.getName())).collect(Collectors.toList());
+                                }
                                 if(tempList.size() > 0){
                                     if(!item.isAppoint()){
                                         cleanColumnComment(commentDTO.getName(), item.getName());
@@ -317,17 +358,20 @@ public class JpaCommentService {
     private void getColumnComment(TableCommentDTO table, Class targetClass, String propertyName, String[] columnName) {
         ColumnComment idColumnComment = AnnotationUtil.getAnnotation(
                 ClassUtil.getDeclaredField(targetClass, propertyName), ColumnComment.class);
+        Column dbCol = AnnotationUtil.getAnnotation(ClassUtil.getDeclaredField(targetClass, propertyName), Column.class);
         Arrays.stream(columnName).forEach(item -> {
-            ColumnCommentDTO column = new ColumnCommentDTO();
-            column.setName(item);
-            if (idColumnComment != null) {
-                column.setComment(idColumnComment.value());
-                column.setAppoint(true);
-            } else {
-                column.setComment("");
-                column.setAppoint(false);
+            if(dbCol != null) { //判断是否是数据库实际字段
+                ColumnCommentDTO column = new ColumnCommentDTO();
+                column.setName(item);
+                if (idColumnComment != null) {
+                    column.setComment(idColumnComment.value());
+                    column.setAppoint(true);
+                } else {
+                    column.setComment("");
+                    column.setAppoint(false);
+                }
+                table.getColumnCommentDTOList().add(column);
             }
-            table.getColumnCommentDTOList().add(column);
         });
     }
 
@@ -345,5 +389,9 @@ public class JpaCommentService {
 
     public void setAutomatic(boolean automatic) {
         this.automatic = automatic;
+    }
+
+    public void setIgnoreTheCase(boolean ignoreTheCase) {
+        this.ignoreTheCase = ignoreTheCase;
     }
 }

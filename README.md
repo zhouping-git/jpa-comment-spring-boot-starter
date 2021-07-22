@@ -30,6 +30,7 @@ zp:
         enable: true #生成注释开关
         automatic：true #是否在启动时自动更新数据库表注释
         merge: true #是否使用增量对比更新：匹配原始数据库表和字段注释执行增量更新
+        ignoreTheCase: true #是否忽略表名和字段名大小写
 ```
 Entity 实体类里面添加注解 **@TableComment** 和  **@ColumnComment**
 ```java

@@ -13,6 +13,7 @@ public class JpaCommentProperties {
     private boolean enable = true;//配置开关，是否开启注释功能
     private boolean automatic = false;//是否在项目启动时自动执行，默认不自动执行
     private boolean merge = true;//是否采用增量更新方式
+    private boolean ignoreTheCase = true;//是否忽略大小写
 
     public boolean isEnable() {
         return enable;
@@ -36,5 +37,13 @@ public class JpaCommentProperties {
 
     public void setMerge(boolean merge) {
         this.merge = merge;
+    }
+
+    public boolean isIgnoreTheCase() {
+        return ignoreTheCase;
+    }
+
+    public void setIgnoreTheCase(boolean ignoreTheCase) {
+        this.ignoreTheCase = ignoreTheCase;
     }
 }

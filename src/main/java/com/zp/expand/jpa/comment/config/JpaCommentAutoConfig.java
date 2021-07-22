@@ -103,6 +103,7 @@ public class JpaCommentAutoConfig {
         service.setAlterCommentService(alterCommentService());
         service.setMerge(jpaCommentProperties.isMerge());
         service.setAutomatic(jpaCommentProperties.isAutomatic());
+        service.setIgnoreTheCase(jpaCommentProperties.isIgnoreTheCase());
         return service;
     }
 }
