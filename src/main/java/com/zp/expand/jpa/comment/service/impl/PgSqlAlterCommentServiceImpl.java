@@ -44,22 +44,44 @@ public class PgSqlAlterCommentServiceImpl implements AlterCommentService {
             " c.relname as table_name," +
             " cast(obj_description(relfilenode,'pg_class') as varchar) as table_comment," +
             " a.attname as column_name," +
-            " d.description as column_comment" +
-//            " concat_ws('',t.typname,SUBSTRING(format_type(a.atttypid,a.atttypmod) from '\\(.*\\)')) as 列类型 \n" +
-            " from pg_class c,pg_attribute a,pg_type t,pg_description d" +
-            " where a.attnum>0 " +
-            " and a.attrelid=c.oid " +
-            " and a.atttypid=t.oid " +
-            " and d.objoid=a.attrelid " +
+            " (" +
+            " select" +
+            "   d.description" +
+            " from pg_description d" +
+            " where d.objoid=a.attrelid" +
             " and d.objsubid=a.attnum" +
+            " ) as column_comment" +
+            " from pg_class c,pg_attribute a,pg_type t" +
+            " where a.attnum>0" +
+            " and a.attrelid=c.oid" +
+            " and a.atttypid=t.oid" +
             " and c.relname in (" +
             " select " +
-            " tablename " +
+            "   tablename " +
             " from pg_tables " +
             " where schemaname=?" +
             " and position('_2' in tablename)=0" +
             ")" +
             " order by c.relname,a.attnum";
+//    String selectTableAndColumn = "select " +
+//            " c.relname as table_name," +
+//            " cast(obj_description(relfilenode,'pg_class') as varchar) as table_comment," +
+//            " a.attname as column_name," +
+//            " d.description as column_comment" +
+//            " from pg_class c,pg_attribute a,pg_type t,pg_description d" +
+//            " where a.attnum>0 " +
+//            " and a.attrelid=c.oid " +
+//            " and a.atttypid=t.oid " +
+//            " and d.objoid=a.attrelid " +
+//            " and d.objsubid=a.attnum" +
+//            " and c.relname in (" +
+//            " select " +
+//            " tablename " +
+//            " from pg_tables " +
+//            " where schemaname=?" +
+//            " and position('_2' in tablename)=0" +
+//            ")" +
+//            " order by c.relname,a.attnum";
 
     @Override
     public void alterTableComment(String tableName, String tableComment) {

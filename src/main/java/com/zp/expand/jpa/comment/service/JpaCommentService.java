@@ -169,9 +169,17 @@ public class JpaCommentService {
         if(merge){
             TableCommentDTO oldDto;
             if (ignoreTheCase){
-                oldDto = oldMap.get(tableName.toLowerCase());
+                if (oldMap.containsKey(tableName.toLowerCase())) {
+                    oldDto = oldMap.get(tableName.toLowerCase());
+                } else {
+                    oldDto = null;
+                }
             }else {
-                oldDto = oldMap.get(tableName);
+                if (oldMap.containsKey(tableName)) {
+                    oldDto = oldMap.get(tableName);
+                } else {
+                    oldDto = null;
+                }
             }
 
             if(commentDTO == null && oldDto != null){

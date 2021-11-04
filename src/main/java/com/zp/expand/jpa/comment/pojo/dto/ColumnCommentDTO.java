@@ -1,6 +1,8 @@
 package com.zp.expand.jpa.comment.pojo.dto;
 
 
+import cn.hutool.core.util.StrUtil;
+
 import java.io.Serializable;
 
 /**
@@ -31,7 +33,11 @@ public class ColumnCommentDTO implements Serializable {
     }
 
     public void setComment(String comment) {
-        this.comment = comment;
+        if (StrUtil.isBlank(comment) || comment.equals("null")){
+            this.comment = "";
+        } else {
+            this.comment = comment;
+        }
     }
 
     public boolean isAppoint() {
